@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password2
+    url: jdbc:postgresql://localhost:5432/anochatty
+    initialization-mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  jta:
+    enabled: true
