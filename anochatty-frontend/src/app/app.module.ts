@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { ChatNotificationComponent } from './chat-notification/chat-notification.component';
 import { ChatComponent } from './chat/chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     ChatNotificationComponent,
     ChatComponent,
-    DashboardComponent
+    DashboardComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

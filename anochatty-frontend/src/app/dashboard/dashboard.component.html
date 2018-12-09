@@ -1,2 +1,4 @@
-<app-chat-notification></app-chat-notification>
+<app-chat-notification *ngIf="isStartChatNotificationVisible"
+                       (dismissStartChat)="dismissStartChat()"
+                       (acceptStartChat)="acceptStartChat()"></app-chat-notification>
 <app-chat></app-chat>
