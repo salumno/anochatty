@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class UserPreferences {
-    private List<Long> movies;
-    private List<Long> food;
-    private List<Long> music;
+    private List<Movie> movies;
+    private List<Food> food;
+    private List<Music> music;
 }

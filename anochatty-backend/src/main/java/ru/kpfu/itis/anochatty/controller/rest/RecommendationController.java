@@ -1,8 +1,8 @@
 package ru.kpfu.itis.anochatty.controller.rest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kpfu.itis.anochatty.dto.UserDto;
 import ru.kpfu.itis.anochatty.service.RecommendationService;
@@ -17,7 +17,7 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    @RequestMapping("/recommendation")
+    @PostMapping("/recommendation")
     public ResponseEntity<List<UserDto>> getRecommendedUsers(@RequestBody final Long userId) {
         return ResponseEntity.ok(UserDto.from(recommendationService.getRecommendedUsers(userId)));
     }
