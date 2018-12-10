@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -9,10 +9,10 @@ export class ChatComponent {
   isChatVisible = false;
 
   private stompClient;
-  private chatId: number;
+  private chatId: string;
   private message: string;
 
-  startChat(stompClient, chatId: number) {
+  startChat(stompClient, chatId: string) {
     this.stompClient = stompClient;
     this.chatId = chatId;
     if (stompClient.isConnected) {

@@ -8,6 +8,9 @@ import { ChatNotificationComponent } from './chat-notification/chat-notification
 import { ChatComponent } from './chat/chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { UserService } from './core/services/user.service';
+import { PreferencesService } from './core/services/preferences.service';
+import { AuthGuard } from './core/guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { RegistrationComponent } from './registration/registration.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService, PreferencesService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

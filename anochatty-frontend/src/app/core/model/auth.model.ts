@@ -1,4 +1,4 @@
-import {Food, Movie, Music} from "./preferences.model";
+import { Food, Movie, Music } from './preferences.model';
 
 export class UserSignUpForm {
   nickname: string;

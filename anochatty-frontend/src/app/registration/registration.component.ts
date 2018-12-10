@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {PreferencesService} from "../core/services/preferences.service";
-import {UserService} from "../core/services/user.service";
-import {UserSignUpForm} from "../core/model/auth.model";
-import {Router} from "@angular/router";
-import {Food, Movie, Music} from "../core/model/preferences.model";
+import { Component, OnInit } from '@angular/core';
+import { PreferencesService } from '../core/services/preferences.service';
+import { UserService } from '../core/services/user.service';
+import { UserSignUpForm } from '../core/model/auth.model';
+import { Router } from '@angular/router';
+import { Food, Movie, Music } from '../core/model/preferences.model';
 
 @Component({
   selector: 'app-registration',
@@ -41,6 +41,11 @@ export class RegistrationComponent implements OnInit {
     this.preferencesService.getMusic().subscribe(music => {
       this.musicOptions = music;
     });
+  }
+
+  confirmSuccessRegistration() {
+    this.successMessage = undefined;
+    this.goToLoginPage();
   }
 
   signUp() {

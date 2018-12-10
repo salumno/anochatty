@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from "../core/services/user.service";
-import {Router} from "@angular/router";
-import {UserSighInForm} from "../core/model/auth.model";
-import {User} from "../core/model/user.model";
+import { Component } from '@angular/core';
+import { UserService } from '../core/services/user.service';
+import { Router } from '@angular/router';
+import { UserSighInForm } from '../core/model/auth.model';
+import { User } from '../core/model/user.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   userNickname: string;
   userPassword: string;
@@ -17,9 +17,6 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
 
   constructor(private userService: UserService, private router: Router) {
-  }
-
-  ngOnInit() {
   }
 
   signInSubmit() {

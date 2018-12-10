@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BASE_URL} from "../../../environments/environment";
-import {UserSighInForm, UserSignUpForm} from "../model/auth.model";
-import {User} from "../model/user.model";
+import { HttpClient } from '@angular/common/http';
+import { BASE_URL } from '../../../environments/environment';
+import { UserSighInForm, UserSignUpForm } from '../model/auth.model';
+import { User } from '../model/user.model';
 
 const AUTH_URL = '/auth';
 
@@ -14,7 +14,8 @@ export class UserService {
   readonly userIdKey = 'userId';
   readonly userNicknameKey = 'userNickname';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getUserId() {
     return localStorage.getItem(this.userIdKey);

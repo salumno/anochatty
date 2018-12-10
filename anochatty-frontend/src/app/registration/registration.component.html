@@ -1,3 +1,55 @@
-<p>
-  registration works!
-</p>
+<div class="container">
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+    <input type="text" pInputText placeholder="Nickname" [(ngModel)]="nickname">
+  </div>
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+    <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
+  </div>
+  <div class="ui-inputgroup">
+    <p-listbox [options]="foodOptions" [(ngModel)]="selectedFood" multiple="multiple" checkbox="checkbox"
+               optionLabel="name">
+      <p-header>
+        Preferred Food
+      </p-header>
+    </p-listbox>
+  </div>
+  <div class="ui-inputgroup">
+    <p-listbox [options]="musicOptions" [(ngModel)]="selectedMusic" multiple="multiple" checkbox="checkbox"
+               optionLabel="name">
+      <p-header>
+        Preferred Music
+      </p-header>
+    </p-listbox>
+  </div>
+  <div class="ui-inputgroup">
+    <p-listbox [options]="movieOptions" [(ngModel)]="selectedMovies" multiple="multiple" checkbox="checkbox"
+               optionLabel="name">
+      <p-header>
+        Preferred Movie Genres
+      </p-header>
+    </p-listbox>
+  </div>
+  <div class="ui-inputgroup">
+    <p-button label="Sign Up" (onClick)="signUp()"></p-button>
+  </div>
+</div>
+
+<p-dialog header="Error" [(visible)]="errorMessage" [resizable]="false" [modal]="true" [responsive]="true" [width]="350"
+          [minWidth]="200" [minY]="70"
+          [maximizable]="true" [baseZIndex]="10000">
+  <span>{{ errorMessage }}</span>
+  <p-footer>
+    <button type="button" pButton (click)="errorMessage = undefined" label="Close"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Success" [(visible)]="successMessage" [resizable]="false" [modal]="true" [responsive]="true"
+          [width]="350" [minWidth]="200" [minY]="70"
+          [maximizable]="true" [baseZIndex]="10000">
+  <span>{{ successMessage }}</span>
+  <p-footer>
+    <button type="button" pButton (click)="confirmSuccessRegistration()" label="Go to login page"></button>
+  </p-footer>
+</p-dialog>

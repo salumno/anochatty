@@ -1,11 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import * as SockJS from "sockjs-client";
-import {SOCKET_CONNECTION_URL} from "../core/model/socket-data";
-import * as Stomp from "stompjs";
-import {ChatGroupInfo} from "../core/model/chat-group.model";
-import {UserService} from "../core/services/user.service";
-import {User} from "../core/model/user.model";
-import {ChatComponent} from "../chat/chat.component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import * as SockJS from 'sockjs-client';
+import { SOCKET_CONNECTION_URL } from '../core/model/socket-data';
+import * as Stomp from 'stompjs';
+import { ChatGroupInfo } from '../core/model/chat-group.model';
+import { UserService } from '../core/services/user.service';
+import { User } from '../core/model/user.model';
+import { ChatComponent } from '../chat/chat.component';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,9 +25,8 @@ export class DashboardComponent implements OnInit {
   message: string;
   isStartChatNotificationVisible = false;
   isUserWaitAnswer = false;
-  isChatStarted = false;
 
-  private isUserBuzy = false;
+  private isUserBusy = false;
   private stompClient = null;
 
   constructor(private userService: UserService) {
@@ -48,9 +48,9 @@ export class DashboardComponent implements OnInit {
       console.log(frame);
       that.stompClient.subscribe('/startChat', (chatGroupInfo: ChatGroupInfo) => {
         console.log(chatGroupInfo);
-        if (!this.isUserBuzy && chatGroupInfo.receiverUserId === this.userService.getUserId()) {
+        if (!this.isUserBusy && chatGroupInfo.receiverUserId === this.userService.getUserId()) {
           this.isStartChatNotificationVisible = true;
-          this.isUserBuzy = true;
+          this.isUserBusy = true;
           this.currentChatGroupInfo = chatGroupInfo;
         }
       })
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   acceptStartChat() {
     console.log('accept');
     this.stompClient.send('/anochatty/startChatAccept', {}, this.currentChatGroupInfo);
-    this.isUserBuzy = false;
+    this.isUserBusy = false;
     this.currentChatGroupInfo = undefined;
     this.chatComponent.startChat(this.stompClient, this.currentChatGroupInfo.chatId);
   }
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
   dismissStartChat() {
     console.log('dismiss');
     this.stompClient.send('/anochatty/startChatDismiss', {}, this.currentChatGroupInfo);
-    this.isUserBuzy = false;
+    this.isUserBusy = false;
     this.currentChatGroupInfo = undefined;
     this.isStartChatNotificationVisible = false;
   }
@@ -96,6 +96,14 @@ export class DashboardComponent implements OnInit {
   }
 
   private createStartChatGroupInfo() {
-    // todo
+    return {
+      senderUserId: this.userService.getUserId(),
+      receiverUserId: this.selectedUser.id,
+      chatId: this.generateChatId()
+    } as ChatGroupInfo;
+  }
+
+  private generateChatId(): string {
+    return UUID.UUID();
   }
 }

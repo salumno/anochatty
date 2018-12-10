@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+    <input type="text" pInputText placeholder="Nickname" [(ngModel)]="userNickname">
+  </div>
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+    <input type="password" pInputText placeholder="Password" [(ngModel)]="userPassword">
+  </div>
+  <div class="ui-inputgroup">
+    <p-button label="Sign In" (onClick)="signInSubmit()"></p-button>
+  </div>
+</div>

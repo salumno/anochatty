@@ -6,5 +6,5 @@ import lombok.Data;
 public class ChatGroupDto {
     private Long senderUserId;
     private Long receiverUserId;
-    private Long chatId;
+    private String chatId;
 }
