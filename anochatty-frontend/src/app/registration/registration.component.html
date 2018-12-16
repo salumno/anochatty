@@ -7,29 +7,37 @@
     <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
     <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
   </div>
-  <div class="ui-inputgroup">
-    <p-listbox [options]="foodOptions" [(ngModel)]="selectedFood" multiple="multiple" checkbox="checkbox"
-               optionLabel="name">
-      <p-header>
-        Preferred Food
-      </p-header>
-    </p-listbox>
-  </div>
-  <div class="ui-inputgroup">
-    <p-listbox [options]="musicOptions" [(ngModel)]="selectedMusic" multiple="multiple" checkbox="checkbox"
-               optionLabel="name">
-      <p-header>
-        Preferred Music
-      </p-header>
-    </p-listbox>
-  </div>
-  <div class="ui-inputgroup">
-    <p-listbox [options]="movieOptions" [(ngModel)]="selectedMovies" multiple="multiple" checkbox="checkbox"
-               optionLabel="name">
-      <p-header>
-        Preferred Movie Genres
-      </p-header>
-    </p-listbox>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <div *ngFor="let foodOption of foodOptions" class="ui-g">
+        <div class="ui-g-6">
+          <div>{{ foodOption.name }}</div>
+        </div>
+        <div class="ui-g-6">
+          <p-dropdown [options]="ratingOptions" [(ngModel)]="foodOption.rating" placeholder="Rate a {{ foodOption.name }}"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-4">
+      <div *ngFor="let musicOption of musicOptions" class="ui-g">
+        <div class="ui-g-6">
+          <div>{{ musicOption.name }}</div>
+        </div>
+        <div class="ui-g-6">
+          <p-dropdown [options]="ratingOptions" [(ngModel)]="musicOption.rating" placeholder="Rate a {{ musicOption.name }}"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-4">
+      <div *ngFor="let movieOption of movieOptions" class="ui-g">
+        <div class="ui-g-6">
+          <div>{{ movieOption.name }}</div>
+        </div>
+        <div class="ui-g-6">
+          <p-dropdown [options]="ratingOptions" [(ngModel)]="movieOption.rating" placeholder="Rate a {{ movieOption.name }}"></p-dropdown>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="ui-inputgroup">
     <p-button label="Sign Up" (onClick)="signUp()"></p-button>

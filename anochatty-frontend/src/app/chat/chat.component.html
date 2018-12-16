@@ -1,3 +1,20 @@
-<p>
-  chat works!
-</p>
+<div class="container" *ngIf="isChatVisible">
+  <p-scrollPanel [style]="{width: '100%', height: '200px'}">
+    <div *ngFor="let message of messages">
+      <div *ngIf="message.isReceived" style="color:red">
+        {{ message.message }}
+      </div>
+      <div *ngIf="!message.isReceived" style="color: green">
+        {{ message.message }}
+      </div>
+    </div>
+  </p-scrollPanel>
+  <div class="ui-inputgroup">
+    <label>
+      <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="currentUserMessage"></textarea>
+    </label>
+  </div>
+  <div class="ui-inputgroup">
+    <p-button label="Send" (onClick)="sendMessage()"></p-button>
+  </div>
+</div>

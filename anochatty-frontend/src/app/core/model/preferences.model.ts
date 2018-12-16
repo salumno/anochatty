@@ -1,6 +1,7 @@
 class Preference {
   id: number;
-  name: string
+  name: string;
+  rating?: number;
 }
 
 export class Movie extends Preference {

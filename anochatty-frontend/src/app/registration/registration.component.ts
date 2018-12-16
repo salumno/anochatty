@@ -4,6 +4,7 @@ import { UserService } from '../core/services/user.service';
 import { UserSignUpForm } from '../core/model/auth.model';
 import { Router } from '@angular/router';
 import { Food, Movie, Music } from '../core/model/preferences.model';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-registration',
@@ -12,16 +13,14 @@ import { Food, Movie, Music } from '../core/model/preferences.model';
 })
 export class RegistrationComponent implements OnInit {
 
+  ratingOptions: SelectItem[];
+
   musicOptions: Music[];
   foodOptions: Food[];
   movieOptions: Movie[];
 
   nickname: string;
   password: string;
-
-  selectedMusic: Music[];
-  selectedFood: Food[];
-  selectedMovies: Movie[];
 
   successMessage: string;
   errorMessage: string;
@@ -32,6 +31,13 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ratingOptions = [
+      {label: '1', value: 1},
+      {label: '2', value: 2},
+      {label: '3', value: 3},
+      {label: '4', value: 4},
+      {label: '5', value: 5},
+    ];
     this.preferencesService.getFood().subscribe(food => {
       this.foodOptions = food;
     });
@@ -65,8 +71,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   private isValid() {
-    return this.nickname && this.password &&
-      this.selectedFood && this.selectedMovies && this.selectedMusic;
+    return this.nickname && this.password;
   }
 
   private createSignUpForm(): UserSignUpForm {
@@ -74,9 +79,9 @@ export class RegistrationComponent implements OnInit {
       nickname: this.nickname,
       password: this.password,
       userPreferences: {
-        movies: this.selectedMovies,
-        food: this.selectedFood,
-        music: this.selectedMusic
+        movies: this.movieOptions,
+        food: this.foodOptions,
+        music: this.musicOptions
       }
     } as UserSignUpForm;
   }
