@@ -4,6 +4,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Movie")
+@DiscriminatorValue("movie")
 public class Movie extends Preference {
 }

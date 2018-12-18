@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import ru.kpfu.itis.anochatty.WebConfiguration;
+import ru.kpfu.itis.anochatty.config.WebConfiguration;
+import ru.kpfu.itis.anochatty.dto.RemoteServerResponse;
+import ru.kpfu.itis.anochatty.dto.UserIdDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,35 +27,36 @@ public class AnalysisServiceUtils {
 
     public void sendUserDataToService(final Long userId, final String sparseVector) {
         final DataAnalysisServiceUserDto data = new DataAnalysisServiceUserDto();
-        data.setSparseVector(sparseVector);
-        data.setUserId(userId);
+        data.setVector(sparseVector);
+        data.setUserID(userId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         final HttpEntity<DataAnalysisServiceUserDto> request = new HttpEntity<>(data, headers);
-        restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/sign-up", request, String.class);
+        restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/sign-up", request, RemoteServerResponse.class);
     }
 
     public List<Long> getRecommendedUserIds(final Long userId) {
+        final UserIdDto userIdDto = new UserIdDto();
+        userIdDto.setUserID(userId);
+
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        MultiValueMap<String, Long> map = new LinkedMultiValueMap<>();
-        map.add("userId", userId);
+        HttpEntity<UserIdDto> request = new HttpEntity<>(userIdDto, headers);
+//        ResponseEntity<RemoteServerResponse> responseEntityWithIds = restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/recommend", request, RemoteServerResponse.class);
 
-        HttpEntity<MultiValueMap<String, Long>> request = new HttpEntity<>(map, headers);
-        ResponseEntity<String> responseEntityWithIds = restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/recommend", request, String.class);
-
-        final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody() : "";
-        return Stream.of(ids.split(","))
+//        final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody().getUserIDs() : "";
+        final String mockId = "1";
+        return Stream.of(mockId.split(","))
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
     }
 
     @Data
     private class DataAnalysisServiceUserDto {
-        private Long userId;
-        private String sparseVector;
+        private Long userID;
+        private String vector;
     }
 }

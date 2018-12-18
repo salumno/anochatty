@@ -16,10 +16,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/anochatty");
-        registry.enableSimpleBroker("/startChat");
-        registry.enableSimpleBroker("/startChatAccept");
-        registry.enableSimpleBroker("/startChatDismiss");
-        registry.enableSimpleBroker("/chatGroup");
+        registry.setApplicationDestinationPrefixes("/anochatty")
+                .enableSimpleBroker(
+                        "/startChat",
+                        "/startChatAccept",
+                        "/startChatDismiss",
+                        "/chatGroup"
+                );
     }
 }

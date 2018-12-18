@@ -1,41 +1,42 @@
 package ru.kpfu.itis.anochatty.controller.ws;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import ru.kpfu.itis.anochatty.dto.ChatGroupDto;
 
 @Controller
 public class ChatWebSocketController {
 
     private final SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
     public ChatWebSocketController(SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
 
     @MessageMapping("/startChat")
     @SendTo("/startChat")
-    public ChatGroupDto startChat(ChatGroupDto chatGroupDto) {
+    public String startChat(String chatGroupDto) {
         return chatGroupDto;
     }
 
     @MessageMapping("/startChatAccept")
     @SendTo("/startChatAccept")
-    public ChatGroupDto startChatAccept(ChatGroupDto chatGroupDto) {
+    public String startChatAccept(String chatGroupDto) {
         return chatGroupDto;
     }
 
     @MessageMapping("/startChatDismiss")
     @SendTo("/startChatDismiss")
-    public ChatGroupDto startChatDismiss(ChatGroupDto chatGroupDto) {
+    public String startChatDismiss(String chatGroupDto) {
         return chatGroupDto;
     }
 
     @MessageMapping("/chatGroup/{chatId}")
     @SendTo("/chatGroup/{chatId}")
-    public ChatGroupDto chatGroup(ChatGroupDto chatGroupDto) {
-        return chatGroupDto;
+    public String processMessage(String message) {
+        return message;
     }
 }

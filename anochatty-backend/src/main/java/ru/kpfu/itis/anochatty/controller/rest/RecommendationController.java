@@ -1,15 +1,17 @@
 package ru.kpfu.itis.anochatty.controller.rest;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.anochatty.dto.UserDto;
+import ru.kpfu.itis.anochatty.dto.UserIdDto;
 import ru.kpfu.itis.anochatty.service.RecommendationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/recommendation")
+@CrossOrigin(origins = "http://localhost:4200")
 public class RecommendationController {
     private final RecommendationService recommendationService;
 
@@ -17,8 +19,8 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    @PostMapping("/recommendation")
-    public ResponseEntity<List<UserDto>> getRecommendedUsers(@RequestBody final Long userId) {
-        return ResponseEntity.ok(UserDto.from(recommendationService.getRecommendedUsers(userId)));
+    @PostMapping("")
+    public ResponseEntity<List<UserDto>> getRecommendedUsers(@Valid  @RequestBody final UserIdDto userIdDto) {
+        return ResponseEntity.ok(UserDto.from(recommendationService.getRecommendedUsers(userIdDto.getUserID())));
     }
 }
