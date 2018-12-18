@@ -6,7 +6,7 @@ export const environment = {
   production: false
 };
 
-export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = 'http://10.17.1.39:8080';
 
 /*
  * For easier debugging in development mode, you can import the following file

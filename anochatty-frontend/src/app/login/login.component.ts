@@ -25,7 +25,7 @@ export class LoginComponent {
       this.userService.signIn(userSingInData).subscribe(
         (user: User) => {
           this.userService.saveUserData(user);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['dashboard']);
         },
         () => {
           this.errorMessage = 'Incorrect nickname or password';

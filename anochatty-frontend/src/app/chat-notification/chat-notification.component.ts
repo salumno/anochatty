@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-notification',
@@ -7,6 +7,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 
 export class ChatNotificationComponent {
+  @Input() isVisible: boolean;
+
   @Output() acceptStartChat = new EventEmitter();
   @Output() dismissStartChat = new EventEmitter();
 }

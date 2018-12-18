@@ -11,6 +11,18 @@ import { RegistrationComponent } from './registration/registration.component';
 import { UserService } from './core/services/user.service';
 import { PreferencesService } from './core/services/preferences.service';
 import { AuthGuard } from './core/guard/auth.guard';
+import { ButtonModule } from 'primeng/button';
+import {
+  DialogModule,
+  DropdownModule,
+  InputMaskModule,
+  InputTextareaModule,
+  InputTextModule,
+  ListboxModule, ScrollPanelModule
+} from 'primeng/primeng';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,9 +35,20 @@ import { AuthGuard } from './core/guard/auth.guard';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    ButtonModule,
+    DropdownModule,
+    InputMaskModule,
+    InputTextModule,
+    InputTextareaModule,
+    DialogModule,
+    ListboxModule,
+    FormsModule,
+    ScrollPanelModule,
+    HttpClientModule
   ],
-  providers: [UserService, PreferencesService, AuthGuard],
+  providers: [UserService, PreferencesService, AuthGuard, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule {

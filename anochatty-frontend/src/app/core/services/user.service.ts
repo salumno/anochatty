@@ -17,21 +17,21 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getUserId() {
-    return localStorage.getItem(this.userIdKey);
+  getUserId(): number {
+    return Number(localStorage.getItem(this.userIdKey));
   }
 
-  getUserNickname() {
+  getUserNickname(): string {
     return localStorage.getItem(this.userNicknameKey);
   }
 
   saveUserData(user: User) {
-    localStorage.setItem(this.userIdKey, user.id);
+    localStorage.setItem(this.userIdKey, String(user.id));
     localStorage.setItem(this.userNicknameKey, user.nickname);
   }
 
   isAuthenticated(): boolean {
-    return this.getUserNickname();
+    return !!this.getUserNickname();
   }
 
   signIn(signInForm: UserSighInForm) {
@@ -43,6 +43,6 @@ export class UserService {
   }
 
   getRecommendedUsers() {
-    return this.http.post(BASE_URL + '/recommendation', {userId: this.getUserId()});
+    return this.http.post(BASE_URL + '/recommendation', {userID: this.getUserId()});
   }
 }

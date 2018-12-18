@@ -38,14 +38,14 @@ export class RegistrationComponent implements OnInit {
       {label: '4', value: 4},
       {label: '5', value: 5},
     ];
-    this.preferencesService.getFood().subscribe(food => {
-      this.foodOptions = food;
+    this.preferencesService.getFood().subscribe((foodOptions: Food[]) => {
+      this.foodOptions = foodOptions;
     });
-    this.preferencesService.getMovies().subscribe(movies => {
-      this.movieOptions = movies;
+    this.preferencesService.getMovies().subscribe((movieOptions: Music[]) => {
+      this.movieOptions = movieOptions;
     });
-    this.preferencesService.getMusic().subscribe(music => {
-      this.musicOptions = music;
+    this.preferencesService.getMusic().subscribe((musicOptions: Music[]) => {
+      this.musicOptions = musicOptions;
     });
   }
 
@@ -67,7 +67,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   goToLoginPage() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
   private isValid() {

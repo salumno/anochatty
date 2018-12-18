@@ -1,11 +1,20 @@
-<app-chat-notification *ngIf="isStartChatNotificationVisible"
-                       (dismissStartChat)="dismissStartChat()"
-                       (acceptStartChat)="acceptStartChat()"></app-chat-notification>
 <div class="container">
-  <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="nickname"></p-listbox>
-  <div class="ui-inputgroup">
-    <p-button label="Start Chat" (onClick)="startChat()"></p-button>
+  <div class="form">
+    <div>
+      <app-chat-notification [isVisible]="isStartChatNotificationVisible"
+                             (dismissStartChat)="dismissStartChat()"
+                             (acceptStartChat)="acceptStartChat()"></app-chat-notification>
+      <div class="container">
+        <h3 *ngIf="!!message">{{message}}</h3>
+        <div style="padding-top: 10px">
+          <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="nickname"></p-listbox>
+          <div class="ui-inputgroup" style="padding-top: 10px">
+            <p-button label="Start Chat" (onClick)="startChat()"></p-button>
+          </div>
+        </div>
+      </div>
+
+      <app-chat></app-chat>
+    </div>
   </div>
 </div>
-
-<app-chat></app-chat>

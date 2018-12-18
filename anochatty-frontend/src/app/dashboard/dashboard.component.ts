@@ -45,9 +45,8 @@ export class DashboardComponent implements OnInit {
 
     const that = this;
     this.stompClient.connect({}, frame => {
-      console.log(frame);
-      that.stompClient.subscribe('/startChat', (chatGroupInfo: ChatGroupInfo) => {
-        console.log(chatGroupInfo);
+      that.stompClient.subscribe('/startChat', message => {
+        const chatGroupInfo: ChatGroupInfo = JSON.parse(message.body);
         if (!this.isUserBusy && chatGroupInfo.receiverUserId === this.userService.getUserId()) {
           this.isStartChatNotificationVisible = true;
           this.isUserBusy = true;
@@ -58,16 +57,15 @@ export class DashboardComponent implements OnInit {
   }
 
   acceptStartChat() {
-    console.log('accept');
-    this.stompClient.send('/anochatty/startChatAccept', {}, this.currentChatGroupInfo);
+    this.stompClient.send('/anochatty/startChatAccept', {}, JSON.stringify(this.currentChatGroupInfo));
     this.isUserBusy = false;
-    this.currentChatGroupInfo = undefined;
     this.chatComponent.startChat(this.stompClient, this.currentChatGroupInfo.chatId);
+    this.currentChatGroupInfo = undefined;
+    this.isStartChatNotificationVisible = false;
   }
 
   dismissStartChat() {
-    console.log('dismiss');
-    this.stompClient.send('/anochatty/startChatDismiss', {}, this.currentChatGroupInfo);
+    this.stompClient.send('/anochatty/startChatDismiss', {}, JSON.stringify(this.currentChatGroupInfo));
     this.isUserBusy = false;
     this.currentChatGroupInfo = undefined;
     this.isStartChatNotificationVisible = false;
@@ -75,18 +73,18 @@ export class DashboardComponent implements OnInit {
 
   startChat() {
     const chatGroupInfo = this.createStartChatGroupInfo();
-    if (this.stompClient.isConnected) {
-      this.stompClient.send('/anochatty/startChat', {}, chatGroupInfo);
+    if (this.stompClient.connected) {
+      this.stompClient.send('/anochatty/startChat', {}, JSON.stringify(chatGroupInfo));
       this.isUserWaitAnswer = true;
-      this.stompClient.subscribe('/startChatAccept', (chatGroupInfo: ChatGroupInfo) => {
-        console.log('accept chat info: ', chatGroupInfo);
+      this.stompClient.subscribe('/startChatAccept', message => {
+        const chatGroupInfo: ChatGroupInfo = JSON.parse(message.body);
         if (this.isUserWaitAnswer && chatGroupInfo.senderUserId === this.userService.getUserId()) {
           this.isUserWaitAnswer = false;
           this.chatComponent.startChat(this.stompClient, chatGroupInfo.chatId);
         }
       });
-      this.stompClient.subscribe('/startChatDismiss', (chatGroupInfo: ChatGroupInfo) => {
-        console.log('dismiss chat info: ', chatGroupInfo);
+      this.stompClient.subscribe('/startChatDismiss', message => {
+        const chatGroupInfo: ChatGroupInfo = JSON.parse(message.body);
         if (this.isUserWaitAnswer && chatGroupInfo.senderUserId === this.userService.getUserId()) {
           this.isUserWaitAnswer = false;
           this.message = 'The user dismissed chat :('
