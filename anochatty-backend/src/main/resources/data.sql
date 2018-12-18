@@ -1,118 +1,120 @@
-INSERT INTO food(name)
-SELECT 'Meat'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Meat'
 WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 1
+  SELECT id FROM preference WHERE id = 1
 );
 
-INSERT INTO food(name)
-SELECT 'Fish'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Fish'
 WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 2
+  SELECT id FROM preference WHERE id = 2
 );
 
-INSERT INTO food(name)
-SELECT 'Vegetables'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Vegetables'
 WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 3
+  SELECT id FROM preference WHERE id = 3
 );
 
-INSERT INTO food(name)
-SELECT 'Fruits'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Fruits'
 WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 4
-);
-
-INSERT INTO food(name)
-SELECT 'Eggs'
-WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 5
-);
-
-INSERT INTO food(name)
-SELECT 'Fast Food'
-WHERE NOT EXISTS (
-  SELECT id FROM food WHERE id = 6
-);
-
-INSERT INTO movie(name)
-SELECT 'Action'
-WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 1
+  SELECT id FROM preference WHERE id = 4
 );
 
 
-INSERT INTO movie(name)
-SELECT 'Adventure'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Eggs'
 WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 2
+  SELECT id FROM preference WHERE id = 5
 );
 
-
-INSERT INTO movie(name)
-SELECT 'Comedy'
+INSERT INTO preference(preference_type, name)
+SELECT 'food', 'Fast Food'
 WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 3
+  SELECT id FROM preference WHERE id = 6
 );
 
-
-INSERT INTO movie(name)
-SELECT 'Drama'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Action'
 WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 4
+  SELECT id FROM preference WHERE id = 7
 );
 
-
-INSERT INTO movie(name)
-SELECT 'Fantasy'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Adventure'
 WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 5
+  SELECT id FROM preference WHERE id = 8
 );
 
-
-INSERT INTO movie(name)
-SELECT 'Thriller'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Comedy'
 WHERE NOT EXISTS (
-  SELECT id FROM movie WHERE id = 6
+  SELECT id FROM preference WHERE id = 9
 );
 
-INSERT INTO music(name)
-SELECT 'Alternative'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Drama'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 1
+  SELECT id FROM preference WHERE id = 10
 );
 
-INSERT INTO music(name)
-SELECT 'Blues'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Fantasy'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 2
+  SELECT id FROM preference WHERE id = 11
 );
 
-INSERT INTO music(name)
-SELECT 'Classical'
+INSERT INTO preference(preference_type, name)
+SELECT 'movie', 'Thriller'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 3
+  SELECT id FROM preference WHERE id = 12
 );
 
-INSERT INTO music(name)
-SELECT 'Country'
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Alternative'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 4
+  SELECT id FROM preference WHERE id = 13
 );
 
-INSERT INTO music(name)
-SELECT 'Dance'
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Blues'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 5
+  SELECT id FROM preference WHERE id = 14
 );
 
-INSERT INTO music(name)
-SELECT 'Pop'
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Classical'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 6
+  SELECT id FROM preference WHERE id = 15
 );
 
-INSERT INTO music(name)
-SELECT 'Rock'
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Country'
 WHERE NOT EXISTS (
-  SELECT id FROM music WHERE id = 7
+  SELECT id FROM preference WHERE id = 16
+);
+
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Dance'
+WHERE NOT EXISTS (
+  SELECT id FROM preference WHERE id = 17
+);
+
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Pop'
+WHERE NOT EXISTS (
+  SELECT id FROM preference WHERE id = 18
+);
+
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Rock'
+WHERE NOT EXISTS (
+  SELECT id FROM preference WHERE id = 19
+);
+
+INSERT INTO preference(preference_type, name)
+SELECT 'music', 'Hip-Hop'
+WHERE NOT EXISTS (
+  SELECT id FROM preference WHERE id = 20
 );
