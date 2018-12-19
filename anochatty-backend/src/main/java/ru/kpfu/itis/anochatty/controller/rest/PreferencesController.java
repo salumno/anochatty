@@ -13,9 +13,11 @@ import ru.kpfu.itis.anochatty.service.PreferenceService;
 
 import java.util.List;
 
+import static ru.kpfu.itis.anochatty.config.WebConfiguration.FRONTEND_SERVICE_URL;
+
 @RestController
 @RequestMapping("/preferences")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = FRONTEND_SERVICE_URL)
 public class PreferencesController {
 
     private PreferenceService preferenceService;

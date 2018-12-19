@@ -5,15 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.kpfu.itis.anochatty.config.WebConfiguration;
 import ru.kpfu.itis.anochatty.dto.RemoteServerResponse;
 import ru.kpfu.itis.anochatty.dto.UserIdDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static ru.kpfu.itis.anochatty.config.WebConfiguration.DATA_ANALYSIS_SERVICE_URL;
 
 @Component
 public class AnalysisServiceUtils {
@@ -34,7 +36,7 @@ public class AnalysisServiceUtils {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         final HttpEntity<DataAnalysisServiceUserDto> request = new HttpEntity<>(data, headers);
-        restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/sign-up", request, RemoteServerResponse.class);
+        restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/sign-up", request, RemoteServerResponse.class);
     }
 
     public List<Long> getRecommendedUserIds(final Long userId) {
@@ -45,11 +47,10 @@ public class AnalysisServiceUtils {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<UserIdDto> request = new HttpEntity<>(userIdDto, headers);
-//        ResponseEntity<RemoteServerResponse> responseEntityWithIds = restTemplate.postForEntity(WebConfiguration.DATA_ANALYSIS_SERVICE_URL + "/recommend", request, RemoteServerResponse.class);
+        ResponseEntity<RemoteServerResponse> responseEntityWithIds = restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/recommend", request, RemoteServerResponse.class);
 
-//        final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody().getUserIDs() : "";
-        final String mockId = "1";
-        return Stream.of(mockId.split(","))
+        final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody().getUserIDs() : "";
+        return Stream.of(ids.split(","))
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
     }
