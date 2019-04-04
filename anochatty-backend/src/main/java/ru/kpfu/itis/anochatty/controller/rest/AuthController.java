@@ -10,11 +10,9 @@ import ru.kpfu.itis.anochatty.dto.UserSignUpForm;
 import ru.kpfu.itis.anochatty.model.User;
 import ru.kpfu.itis.anochatty.service.AuthService;
 
-import static ru.kpfu.itis.anochatty.config.WebConfiguration.FRONTEND_SERVICE_URL;
-
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = FRONTEND_SERVICE_URL)
+@CrossOrigin
 public class AuthController {
     private final AuthService authService;
 
