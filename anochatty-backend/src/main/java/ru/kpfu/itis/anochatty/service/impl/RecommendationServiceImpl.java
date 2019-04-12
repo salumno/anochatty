@@ -2,6 +2,7 @@ package ru.kpfu.itis.anochatty.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.anochatty.dto.PreferenceUpdateDto;
 import ru.kpfu.itis.anochatty.model.User;
 import ru.kpfu.itis.anochatty.repository.UserRepository;
 import ru.kpfu.itis.anochatty.service.RecommendationService;
@@ -31,5 +32,10 @@ public class RecommendationServiceImpl implements RecommendationService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateUserPreferences(final PreferenceUpdateDto preferenceUpdateDto) {
+        analysisServiceUtils.sendUserMessagesToAnalyze(preferenceUpdateDto);
     }
 }

@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         user.setNickname(userSignUpForm.getNickname());
         user.setPassword(userSignUpForm.getPassword());
         userRepository.save(user);
-        analysisServiceUtils.sendUserDataToService(user.getId(), userUtils.createSparseVector(userSignUpForm.getUserPreferences()));
+        analysisServiceUtils.sendUserDataToService(user.getId(), userUtils.createSparseVector(userSignUpForm.getRatedPreferences()));
         return user;
     }
 }

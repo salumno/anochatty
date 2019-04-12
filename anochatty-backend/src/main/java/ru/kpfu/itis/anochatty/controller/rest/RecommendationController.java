@@ -2,6 +2,7 @@ package ru.kpfu.itis.anochatty.controller.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kpfu.itis.anochatty.dto.PreferenceUpdateDto;
 import ru.kpfu.itis.anochatty.dto.UserDto;
 import ru.kpfu.itis.anochatty.dto.UserIdDto;
 import ru.kpfu.itis.anochatty.service.RecommendationService;
@@ -19,8 +20,14 @@ public class RecommendationController {
         this.recommendationService = recommendationService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<List<UserDto>> getRecommendedUsers(@Valid @RequestBody final UserIdDto userIdDto) {
         return ResponseEntity.ok(UserDto.from(recommendationService.getRecommendedUsers(userIdDto.getUserID())));
+    }
+
+    @PostMapping("/analyze")
+    public ResponseEntity sendMessagesForStatistics(@Valid @RequestBody final PreferenceUpdateDto preferenceUpdateDto) {
+        recommendationService.updateUserPreferences(preferenceUpdateDto);
+        return ResponseEntity.ok().build();
     }
 }

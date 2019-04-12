@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import ru.kpfu.itis.anochatty.dto.PreferenceUpdateDto;
 import ru.kpfu.itis.anochatty.dto.RemoteServerResponse;
 import ru.kpfu.itis.anochatty.dto.UserIdDto;
 
@@ -32,10 +33,7 @@ public class AnalysisServiceUtils {
         data.setVector(sparseVector);
         data.setUserID(userId);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        final HttpEntity<DataAnalysisServiceUserDto> request = new HttpEntity<>(data, headers);
+        final HttpEntity<DataAnalysisServiceUserDto> request = new HttpEntity<>(data, getHttpHeaderJson());
         restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/sign-up", request, RemoteServerResponse.class);
     }
 
@@ -43,16 +41,24 @@ public class AnalysisServiceUtils {
         final UserIdDto userIdDto = new UserIdDto();
         userIdDto.setUserID(userId);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<UserIdDto> request = new HttpEntity<>(userIdDto, headers);
+        HttpEntity<UserIdDto> request = new HttpEntity<>(userIdDto, getHttpHeaderJson());
         ResponseEntity<RemoteServerResponse> responseEntityWithIds = restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/recommend", request, RemoteServerResponse.class);
 
         final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody().getUserIDs() : "";
         return Stream.of(ids.split(","))
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    public void sendUserMessagesToAnalyze(final PreferenceUpdateDto preferenceUpdateDto) {
+        HttpEntity<PreferenceUpdateDto> request = new HttpEntity<>(preferenceUpdateDto, getHttpHeaderJson());
+        restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/analyze", request, ResponseEntity.class);
+    }
+
+    private HttpHeaders getHttpHeaderJson() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
     }
 
     @Data
