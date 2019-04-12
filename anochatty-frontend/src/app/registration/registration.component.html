@@ -8,33 +8,13 @@
     <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
   </div>
   <div class="ui-g">
-    <div class="ui-g-4">
-      <div *ngFor="let foodOption of foodOptions" class="ui-g">
+    <div class="ui-g-12">
+      <div *ngFor="let preferenceOption of preferenceOptions" class="ui-g">
         <div class="ui-g-6">
-          <div>{{ foodOption.name }}</div>
+          <div>{{ preferenceOption.name }}</div>
         </div>
         <div class="ui-g-6">
-          <p-dropdown [options]="ratingOptions" [(ngModel)]="foodOption.rating" placeholder="Rate a {{ foodOption.name }}"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="ui-g-4">
-      <div *ngFor="let musicOption of musicOptions" class="ui-g">
-        <div class="ui-g-6">
-          <div>{{ musicOption.name }}</div>
-        </div>
-        <div class="ui-g-6">
-          <p-dropdown [options]="ratingOptions" [(ngModel)]="musicOption.rating" placeholder="Rate a {{ musicOption.name }}"></p-dropdown>
-        </div>
-      </div>
-    </div>
-    <div class="ui-g-4">
-      <div *ngFor="let movieOption of movieOptions" class="ui-g">
-        <div class="ui-g-6">
-          <div>{{ movieOption.name }}</div>
-        </div>
-        <div class="ui-g-6">
-          <p-dropdown [options]="ratingOptions" [(ngModel)]="movieOption.rating" placeholder="Rate a {{ movieOption.name }}"></p-dropdown>
+          <input type="number" pInputText placeholder="Password" [(ngModel)]="preferenceOption.rating">
         </div>
       </div>
     </div>

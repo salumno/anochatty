@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ChatMessage, WebSocketChatMessage } from '../core/model/chat-message.model';
 import { UserService } from '../core/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -11,12 +12,14 @@ export class ChatComponent {
   isChatVisible = false;
 
   messages: ChatMessage[] = [];
+  userMessages: string;
   currentUserMessage: string;
 
   private stompClient;
   private chatId: string;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {
+  }
 
   startChat(stompClient, chatId: string) {
     this.stompClient = stompClient;
@@ -29,6 +32,12 @@ export class ChatComponent {
           this.renderReceivedMessage(messageObject.message);
         }
       });
+      this.stompClient.subscribe(`/endChat/${this.chatId}`, message => {
+        const messageObject: WebSocketChatMessage = JSON.parse(message.body);
+        if (messageObject.senderId != this.userService.getUserId()) {
+          this.endChat();
+        }
+      });
     }
   }
 
@@ -38,12 +47,25 @@ export class ChatComponent {
       message: this.currentUserMessage
     } as WebSocketChatMessage;
     this.stompClient.send(`/anochatty/chatGroup/${this.chatId}`, {}, JSON.stringify(messageObject));
+    this.userMessages = this.userMessages + this.currentUserMessage + '.';
     this.renderSentMessage();
     this.currentUserMessage = undefined;
   }
 
-  closeChat() {
-    this.isChatVisible = false;
+  stopChat() {
+    const messageObject = {
+      senderId: this.userService.getUserId(),
+      message: 'Chat is over.'
+    } as WebSocketChatMessage;
+    this.stompClient.send(`/anochatty/endChat/${this.chatId}`, {}, JSON.stringify(messageObject));
+    this.endChat();
+  }
+
+  private endChat() {
+    this.userService.sendDataToAnalyze(this.userMessages).subscribe(() => {
+      this.isChatVisible = false;
+      this.router.navigate(['dashboard']);
+    })
   }
 
   private renderReceivedMessage(message: string) {
@@ -55,5 +77,4 @@ export class ChatComponent {
     const chatMessage = {message: this.currentUserMessage, isReceived: false} as ChatMessage;
     this.messages.push(chatMessage);
   }
-
 }

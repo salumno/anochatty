@@ -3,8 +3,6 @@ import { PreferencesService } from '../core/services/preferences.service';
 import { UserService } from '../core/services/user.service';
 import { UserSignUpForm } from '../core/model/auth.model';
 import { Router } from '@angular/router';
-import { Food, Movie, Music } from '../core/model/preferences.model';
-import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-registration',
@@ -13,11 +11,7 @@ import { SelectItem } from 'primeng/api';
 })
 export class RegistrationComponent implements OnInit {
 
-  ratingOptions: SelectItem[];
-
-  musicOptions: Music[];
-  foodOptions: Food[];
-  movieOptions: Movie[];
+  preferenceOptions: Preference[];
 
   nickname: string;
   password: string;
@@ -31,21 +25,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ratingOptions = [
-      {label: '1', value: 1},
-      {label: '2', value: 2},
-      {label: '3', value: 3},
-      {label: '4', value: 4},
-      {label: '5', value: 5},
-    ];
-    this.preferencesService.getFood().subscribe((foodOptions: Food[]) => {
-      this.foodOptions = foodOptions;
-    });
-    this.preferencesService.getMovies().subscribe((movieOptions: Music[]) => {
-      this.movieOptions = movieOptions;
-    });
-    this.preferencesService.getMusic().subscribe((musicOptions: Music[]) => {
-      this.musicOptions = musicOptions;
+    this.preferencesService.getPreferences().subscribe(preferenceOptions => {
+      this.preferenceOptions = preferenceOptions;
     });
   }
 
@@ -62,7 +43,7 @@ export class RegistrationComponent implements OnInit {
         () => this.errorMessage = 'Please check your nickname. It is already in use.'
       );
     } else {
-      this.errorMessage = 'Check your fields!';
+      this.errorMessage = 'Check your fields! Rating must be a value between 0 and 100.';
     }
   }
 
@@ -71,18 +52,16 @@ export class RegistrationComponent implements OnInit {
   }
 
   private isValid() {
-    return this.nickname && this.password;
+    const invalidRatedPreferences = this.preferenceOptions.filter(
+      preference => preference.rating && (preference.rating < 0 || preference.rating > 100));
+    return this.nickname && this.password && !invalidRatedPreferences.length;
   }
 
   private createSignUpForm(): UserSignUpForm {
     return {
       nickname: this.nickname,
       password: this.password,
-      userPreferences: {
-        movies: this.movieOptions,
-        food: this.foodOptions,
-        music: this.musicOptions
-      }
+      ratedPreferences: this.preferenceOptions
     } as UserSignUpForm;
   }
 }

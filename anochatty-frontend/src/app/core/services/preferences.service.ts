@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BASE_URL } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 const PREFERENCES_URL = '/preferences';
 
@@ -12,15 +13,7 @@ export class PreferencesService {
   constructor(private http: HttpClient) {
   }
 
-  getMovies() {
-    return this.http.get(BASE_URL + PREFERENCES_URL + '/movies');
-  }
-
-  getFood() {
-    return this.http.get(BASE_URL + PREFERENCES_URL + '/food');
-  }
-
-  getMusic() {
-    return this.http.get(BASE_URL + PREFERENCES_URL + '/music');
+  getPreferences(): Observable<Preference[]> {
+    return this.http.get<Preference[]>(BASE_URL + PREFERENCES_URL);
   }
 }

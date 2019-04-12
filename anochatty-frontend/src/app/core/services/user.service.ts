@@ -5,6 +5,7 @@ import { UserSighInForm, UserSignUpForm } from '../model/auth.model';
 import { User } from '../model/user.model';
 
 const AUTH_URL = '/auth';
+const RECOMMENDATION_URL = '/recommendation';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,11 @@ export class UserService {
   }
 
   getRecommendedUsers() {
-    return this.http.post(BASE_URL + '/recommendation', {userID: this.getUserId()});
+    return this.http.post(BASE_URL + RECOMMENDATION_URL, {userID: this.getUserId()});
+  }
+
+  sendDataToAnalyze(messages: string) {
+    const userId = this.getUserId();
+    return this.http.post(BASE_URL + RECOMMENDATION_URL + '/analyze', {userId, messages});
   }
 }
