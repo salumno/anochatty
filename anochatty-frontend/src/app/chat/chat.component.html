@@ -21,3 +21,12 @@
     <p-button label="Stop Chat" (onClick)="stopChat()"></p-button>
   </div>
 </div>
+
+<p-dialog header="End Chat Notification" [resizable]="false" [visible]="endChatNotificationMessage" [modal]="true" [responsive]="true"
+          [width]="350" [minWidth]="200" [minY]="70"
+          [maximizable]="true" [baseZIndex]="10000">
+  <span>{{endChatNotificationMessage}}</span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="closeChatWindow()" label="Ok"></button>
+  </p-footer>
+</p-dialog>

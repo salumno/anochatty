@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatMessage, WebSocketChatMessage } from '../core/model/chat-message.model';
 import { UserService } from '../core/services/user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +17,9 @@ export class ChatComponent {
   private stompClient;
   private chatId: string;
 
-  constructor(private userService: UserService, private router: Router) {
+  endChatNotificationMessage: string;
+
+  constructor(private userService: UserService) {
   }
 
   startChat(stompClient, chatId: string) {
@@ -35,7 +36,7 @@ export class ChatComponent {
       this.stompClient.subscribe(`/endChat/${this.chatId}`, message => {
         const messageObject: WebSocketChatMessage = JSON.parse(message.body);
         if (messageObject.senderId != this.userService.getUserId()) {
-          this.endChat();
+          this.showEndChatNotificationDialog();
         }
       });
     }
@@ -47,7 +48,7 @@ export class ChatComponent {
       message: this.currentUserMessage
     } as WebSocketChatMessage;
     this.stompClient.send(`/anochatty/chatGroup/${this.chatId}`, {}, JSON.stringify(messageObject));
-    this.userMessages = this.userMessages + this.currentUserMessage + '.';
+    this.updateUserMessages();
     this.renderSentMessage();
     this.currentUserMessage = undefined;
   }
@@ -58,14 +59,13 @@ export class ChatComponent {
       message: 'Chat is over.'
     } as WebSocketChatMessage;
     this.stompClient.send(`/anochatty/endChat/${this.chatId}`, {}, JSON.stringify(messageObject));
-    this.endChat();
+    this.sendDataToAnalyzeAndClose();
   }
 
-  private endChat() {
+  private sendDataToAnalyzeAndClose() {
     this.userService.sendDataToAnalyze(this.userMessages).subscribe(() => {
       this.isChatVisible = false;
-      this.router.navigate(['dashboard']);
-    })
+    });
   }
 
   private renderReceivedMessage(message: string) {
@@ -76,5 +76,22 @@ export class ChatComponent {
   private renderSentMessage() {
     const chatMessage = {message: this.currentUserMessage, isReceived: false} as ChatMessage;
     this.messages.push(chatMessage);
+  }
+
+  private updateUserMessages() {
+    if (this.userMessages) {
+      this.userMessages += this.currentUserMessage + '.';
+    } else {
+      this.userMessages = this.currentUserMessage + '.';
+    }
+  }
+
+  private showEndChatNotificationDialog() {
+    this.endChatNotificationMessage = 'Your fella ended the chat';
+  }
+
+  closeChatWindow() {
+    this.endChatNotificationMessage = undefined;
+    this.sendDataToAnalyzeAndClose();
   }
 }
