@@ -21,7 +21,8 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         "/startChat",
                         "/startChatAccept",
                         "/startChatDismiss",
-                        "/chatGroup"
+                        "/chatGroup",
+                        "/endChat"
                 );
     }
 }
