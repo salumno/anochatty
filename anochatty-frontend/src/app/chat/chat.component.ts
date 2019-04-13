@@ -11,12 +11,16 @@ export class ChatComponent {
   isChatVisible = false;
 
   messages: ChatMessage[] = [];
+  userMessages: string;
   currentUserMessage: string;
 
   private stompClient;
   private chatId: string;
 
-  constructor(private userService: UserService) {}
+  endChatNotificationMessage: string;
+
+  constructor(private userService: UserService) {
+  }
 
   startChat(stompClient, chatId: string) {
     this.stompClient = stompClient;
@@ -29,6 +33,12 @@ export class ChatComponent {
           this.renderReceivedMessage(messageObject.message);
         }
       });
+      this.stompClient.subscribe(`/endChat/${this.chatId}`, message => {
+        const messageObject: WebSocketChatMessage = JSON.parse(message.body);
+        if (messageObject.senderId != this.userService.getUserId()) {
+          this.showEndChatNotificationDialog();
+        }
+      });
     }
   }
 
@@ -38,12 +48,24 @@ export class ChatComponent {
       message: this.currentUserMessage
     } as WebSocketChatMessage;
     this.stompClient.send(`/anochatty/chatGroup/${this.chatId}`, {}, JSON.stringify(messageObject));
+    this.updateUserMessages();
     this.renderSentMessage();
     this.currentUserMessage = undefined;
   }
 
-  closeChat() {
-    this.isChatVisible = false;
+  stopChat() {
+    const messageObject = {
+      senderId: this.userService.getUserId(),
+      message: 'Chat is over.'
+    } as WebSocketChatMessage;
+    this.stompClient.send(`/anochatty/endChat/${this.chatId}`, {}, JSON.stringify(messageObject));
+    this.sendDataToAnalyzeAndClose();
+  }
+
+  private sendDataToAnalyzeAndClose() {
+    this.userService.sendDataToAnalyze(this.userMessages).subscribe(() => {
+      this.isChatVisible = false;
+    });
   }
 
   private renderReceivedMessage(message: string) {
@@ -56,4 +78,20 @@ export class ChatComponent {
     this.messages.push(chatMessage);
   }
 
+  private updateUserMessages() {
+    if (this.userMessages) {
+      this.userMessages += this.currentUserMessage + '.';
+    } else {
+      this.userMessages = this.currentUserMessage + '.';
+    }
+  }
+
+  private showEndChatNotificationDialog() {
+    this.endChatNotificationMessage = 'Your fella ended the chat';
+  }
+
+  closeChatWindow() {
+    this.endChatNotificationMessage = undefined;
+    this.sendDataToAnalyzeAndClose();
+  }
 }

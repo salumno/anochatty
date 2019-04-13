@@ -1,13 +1,7 @@
-import { Food, Movie, Music } from './preferences.model';
-
 export class UserSignUpForm {
   nickname: string;
   password: string;
-  userPreferences: {
-    movies: Movie[];
-    food: Food[];
-    music: Music[];
-  };
+  ratedPreferences: Preference[];
 }
 
 export class UserSighInForm {

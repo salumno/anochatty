@@ -39,4 +39,10 @@ public class ChatWebSocketController {
     public String processMessage(String message) {
         return message;
     }
+
+    @MessageMapping("/endChat/{chatId}")
+    @SendTo("/endChat/{chatId}")
+    public String endChat(String message) {
+        return message;
+    }
 }
