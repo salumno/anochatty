@@ -15,7 +15,7 @@ export class ChatComponent {
   isChatVisible = false;
 
   messages: ChatMessage[] = [];
-  userMessages: string;
+  userMessages = '';
   currentUserMessage: string;
 
   private stompClient;
