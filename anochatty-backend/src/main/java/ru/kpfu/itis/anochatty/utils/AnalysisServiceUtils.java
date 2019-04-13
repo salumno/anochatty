@@ -5,16 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ru.kpfu.itis.anochatty.dto.PreferenceUpdateDto;
 import ru.kpfu.itis.anochatty.dto.RemoteServerResponse;
-import ru.kpfu.itis.anochatty.dto.UserIdDto;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static ru.kpfu.itis.anochatty.config.WebConfiguration.DATA_ANALYSIS_SERVICE_URL;
 
@@ -38,21 +35,17 @@ public class AnalysisServiceUtils {
     }
 
     public List<Long> getRecommendedUserIds(final Long userId) {
-        final UserIdDto userIdDto = new UserIdDto();
-        userIdDto.setUserID(userId);
-
-        HttpEntity<UserIdDto> request = new HttpEntity<>(userIdDto, getHttpHeaderJson());
-        ResponseEntity<RemoteServerResponse> responseEntityWithIds = restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/recommend", request, RemoteServerResponse.class);
-
-        final String ids = responseEntityWithIds.hasBody() ? responseEntityWithIds.getBody().getUserIDs() : "";
-        return Stream.of(ids.split(","))
-                .map(Long::valueOf)
-                .collect(Collectors.toList());
+        if (userId == 1) {
+            return Collections.singletonList(2L);
+        } else if (userId == 2) {
+            return Collections.singletonList(1L);
+        }
+        return Collections.emptyList();
     }
 
     public void sendUserMessagesToAnalyze(final PreferenceUpdateDto preferenceUpdateDto) {
         HttpEntity<PreferenceUpdateDto> request = new HttpEntity<>(preferenceUpdateDto, getHttpHeaderJson());
-        restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/analyze", request, ResponseEntity.class);
+        System.out.println(preferenceUpdateDto.getUserId() + ": " + preferenceUpdateDto.getMessages());
     }
 
     private HttpHeaders getHttpHeaderJson() {

@@ -1,3 +1,15 @@
+INSERT INTO "user"(nickname, password)
+SELECT 'lupa', 'lupa'
+WHERE NOT EXISTS (
+  SELECT id FROM "user" WHERE id = 1
+);
+
+INSERT INTO "user"(nickname, password)
+SELECT 'pupa', 'pupa'
+WHERE NOT EXISTS (
+  SELECT id FROM "user" WHERE id = 2
+);
+
 INSERT INTO preference(name)
 SELECT 'Music'
 WHERE NOT EXISTS (
