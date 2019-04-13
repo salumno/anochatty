@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ChatMessage, WebSocketChatMessage } from '../core/model/chat-message.model';
 import { UserService } from '../core/services/user.service';
 
@@ -8,6 +8,10 @@ import { UserService } from '../core/services/user.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
+  @Output() closeChat = new EventEmitter();
+
+  senderNickname: string;
+
   isChatVisible = false;
 
   messages: ChatMessage[] = [];
@@ -22,9 +26,10 @@ export class ChatComponent {
   constructor(private userService: UserService) {
   }
 
-  startChat(stompClient, chatId: string) {
+  startChat(stompClient, chatId: string, senderNickname: string) {
     this.stompClient = stompClient;
     this.chatId = chatId;
+    this.senderNickname = senderNickname;
     if (stompClient.connected) {
       this.isChatVisible = true;
       this.stompClient.subscribe(`/chatGroup/${this.chatId}`, message => {
@@ -65,6 +70,7 @@ export class ChatComponent {
   private sendDataToAnalyzeAndClose() {
     this.userService.sendDataToAnalyze(this.userMessages).subscribe(() => {
       this.isChatVisible = false;
+      this.closeChat.emit();
     });
   }
 

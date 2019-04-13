@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   isStartChatNotificationVisible = false;
   isUserWaitAnswer = false;
 
+  isChatVisible = false;
+
   private isUserBusy = false;
   private stompClient = null;
 
@@ -57,9 +59,12 @@ export class DashboardComponent implements OnInit {
   }
 
   acceptStartChat() {
+    const senderNickname = this.currentChatGroupInfo.senderNickname;
+    this.currentChatGroupInfo.senderNickname = this.userService.getUserNickname();
     this.stompClient.send('/anochatty/startChatAccept', {}, JSON.stringify(this.currentChatGroupInfo));
     this.isUserBusy = false;
-    this.chatComponent.startChat(this.stompClient, this.currentChatGroupInfo.chatId);
+    this.isChatVisible = true;
+    this.chatComponent.startChat(this.stompClient, this.currentChatGroupInfo.chatId, senderNickname);
     this.currentChatGroupInfo = undefined;
     this.isStartChatNotificationVisible = false;
   }
@@ -80,7 +85,8 @@ export class DashboardComponent implements OnInit {
         const chatGroupInfo: ChatGroupInfo = JSON.parse(message.body);
         if (this.isUserWaitAnswer && chatGroupInfo.senderUserId === this.userService.getUserId()) {
           this.isUserWaitAnswer = false;
-          this.chatComponent.startChat(this.stompClient, chatGroupInfo.chatId);
+          this.isChatVisible = true;
+          this.chatComponent.startChat(this.stompClient, chatGroupInfo.chatId, chatGroupInfo.senderNickname);
         }
       });
       this.stompClient.subscribe('/startChatDismiss', message => {
@@ -93,9 +99,21 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  closeChat() {
+    this.isChatVisible = false;
+  }
+
+  getChatSenderUsername(): string {
+    if (this.currentChatGroupInfo) {
+      return this.currentChatGroupInfo.senderNickname;
+    }
+    return "Anonymous";
+  }
+
   private createStartChatGroupInfo() {
     return {
       senderUserId: this.userService.getUserId(),
+      senderNickname: this.userService.getUserNickname(),
       receiverUserId: this.selectedUser.id,
       chatId: this.generateChatId()
     } as ChatGroupInfo;

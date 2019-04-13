@@ -1,7 +1,7 @@
 <p-dialog header="Start Chat Notification" [resizable]="false" [visible]="isVisible" [modal]="true" [responsive]="true"
           [width]="350" [minWidth]="200" [minY]="70"
           [maximizable]="true" [baseZIndex]="10000">
-  <span>Do you want to start new chat with the great fella?</span>
+  <span>Do you want to start new chat with the great fella with name {{senderNickname}}?</span>
   <p-footer>
     <button type="button" pButton icon="pi pi-check" (click)="acceptStartChat.emit()" label="Yes"></button>
     <button type="button" pButton icon="pi pi-close" (click)="dismissStartChat.emit()" label="No"

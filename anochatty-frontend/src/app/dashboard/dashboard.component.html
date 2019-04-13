@@ -2,9 +2,10 @@
   <div class="form">
     <div>
       <app-chat-notification [isVisible]="isStartChatNotificationVisible"
+                             [senderNickname]="getChatSenderUsername()"
                              (dismissStartChat)="dismissStartChat()"
                              (acceptStartChat)="acceptStartChat()"></app-chat-notification>
-      <div class="container">
+      <div *ngIf="!isChatVisible" class="container">
         <h3 *ngIf="!!message">{{message}}</h3>
         <div style="padding-top: 10px">
           <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="nickname"></p-listbox>
@@ -14,7 +15,7 @@
         </div>
       </div>
 
-      <app-chat></app-chat>
+      <app-chat (closeChat)="closeChat()"></app-chat>
     </div>
   </div>
 </div>
