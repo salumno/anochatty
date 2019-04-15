@@ -1,12 +1,5 @@
+<body>
 <div class="container">
-  <div class="ui-inputgroup">
-    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-    <input type="text" pInputText placeholder="Nickname" [(ngModel)]="nickname">
-  </div>
-  <div class="ui-inputgroup">
-    <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
-    <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
-  </div>
   <div class="ui-g">
     <div class="ui-g-12">
       <div *ngFor="let preferenceOption of preferenceOptions" class="ui-g">
@@ -14,13 +7,15 @@
           <div>{{ preferenceOption.name }}</div>
         </div>
         <div class="ui-g-6">
-          <input type="number" pInputText placeholder="Rate {{preferenceOption.name}}" [(ngModel)]="preferenceOption.rating">
+          <input type="number" pInputText placeholder="Rate {{preferenceOption.name}} (0-100)" [(ngModel)]="preferenceOption.rating">
         </div>
       </div>
     </div>
   </div>
   <div class="ui-inputgroup">
-    <p-button label="Sign Up" (onClick)="signUp()"></p-button>
+    <input type="text" pInputText placeholder="Nickname" [(ngModel)]="nickname">
+    <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
+    <p-button label="Sign Up" style="width:10px" (onClick)="signUp()"></p-button>
   </div>
 </div>
 
@@ -41,3 +36,4 @@
     <button type="button" pButton (click)="confirmSuccessRegistration()" label="Go to login page"></button>
   </p-footer>
 </p-dialog>
+</body>
