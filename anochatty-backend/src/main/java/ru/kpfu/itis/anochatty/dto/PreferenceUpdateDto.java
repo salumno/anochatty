@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class PreferenceUpdateDto {
     @NotNull
-    private Long userId;
+    private Long userID;
     @NotNull
-    private String messages;
+    private String text;
 }
