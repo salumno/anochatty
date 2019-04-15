@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
     const senderNickname = this.currentChatGroupInfo.senderNickname;
     this.currentChatGroupInfo.senderNickname = this.userService.getUserNickname();
     this.stompClient.send('/anochatty/startChatAccept', {}, JSON.stringify(this.currentChatGroupInfo));
-    this.isUserBusy = false;
+    this.isUserBusy = true;
     this.isChatVisible = true;
     this.chatComponent.startChat(this.stompClient, this.currentChatGroupInfo.chatId, senderNickname);
     this.currentChatGroupInfo = undefined;
@@ -100,6 +100,7 @@ export class DashboardComponent implements OnInit {
   }
 
   closeChat() {
+    this.isUserBusy = false;
     this.isChatVisible = false;
   }
 

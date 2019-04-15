@@ -49,6 +49,6 @@ export class UserService {
 
   sendDataToAnalyze(messages: string) {
     const userId = this.getUserId();
-    return this.http.post(BASE_URL + RECOMMENDATION_URL + '/analyze', {userId, messages});
+    return this.http.post(BASE_URL + RECOMMENDATION_URL + '/analyze', {userID: userId, text: messages});
   }
 }
