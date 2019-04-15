@@ -53,7 +53,7 @@ public class AnalysisServiceUtils {
     public void sendUserMessagesToAnalyze(final PreferenceUpdateDto preferenceUpdateDto) {
         HttpEntity<PreferenceUpdateDto> request = new HttpEntity<>(preferenceUpdateDto, getHttpHeaderJson());
         if (!preferenceUpdateDto.getText().isEmpty()) {
-            restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/analyze", request, ResponseEntity.class);
+            restTemplate.postForEntity(DATA_ANALYSIS_SERVICE_URL + "/analyze", request, RemoteServerResponse.class);
         }
     }
 
