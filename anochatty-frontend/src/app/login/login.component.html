@@ -1,27 +1,28 @@
-<div class="container">
+<body>
+<div class="container" style="background: transparent">
   <div class="form">
-    <div>
+    <div id="loginForm">
       <div style="padding-top: 5px" class="ui-inputgroup">
-        <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
         <input type="text" pInputText placeholder="Nickname" [(ngModel)]="userNickname">
       </div>
       <div style="padding-top: 5px" class="ui-inputgroup">
-        <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
         <input type="password" pInputText placeholder="Password" [(ngModel)]="userPassword">
       </div>
       <div style="padding-top: 5px;" class="ui-inputgroup">
-        <p-button style="{padding-top: 5px; width: 100% }" label="Sign In" (onClick)="signInSubmit()"></p-button>
+        <p-button style="{padding-top: 5px; width: 100%}" label="Sign In" (onClick)="signInSubmit()"></p-button>
       </div>
       <div class="ui-inputgroup" style="padding-top: 5px">
         <div class="ui-g">
-          <div class="ui-g-6">
-            <p>Do not have an account? Please sign up.</p>
+          <div class="ui-g-7">
+            <p>Do not have an account?</p>
           </div>
-          <div class="ui-g-6">
-            <p-button label="Sign up" routerLink="/registration"></p-button>
+          <div class="ui-g-2">
+            <p-button style="{margin-top: 50px}" label="Sign up"  routerLink="/registration"></p-button>
           </div>
+          <div class="ui-g-2"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
+</body>

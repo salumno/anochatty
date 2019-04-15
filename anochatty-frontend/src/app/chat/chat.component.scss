@@ -1,0 +1,17 @@
+@media all and (min-width: 400px) {
+  .container {
+    padding-left: 10%;
+  }
+}
+
+#sendMessage{
+  padding-left: 3px;
+}
+
+
+
+@media all {
+  #stopChat{
+    background-color: #d6a693;
+  }
+}
