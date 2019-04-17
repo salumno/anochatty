@@ -1,6 +1,7 @@
 <div class="container" *ngIf="isChatVisible" style="padding-top: 10px">
   <h3 *ngIf="!!senderNickname">Chat with {{senderNickname}}</h3>
-  <p-scrollPanel [style]="{width: '100%', height: '200px', border: 'none'}">
+  <hr/>
+  <p-scrollPanel class="ui-scrollpanel-bar-y" [style]="{width: '200px', maxWidth:'200px', height: '200px', border: 'none'}">
     <div *ngFor="let message of messages">
       <div *ngIf="message.isReceived" style="color:red">
         {{ message.message }}
@@ -10,13 +11,12 @@
       </div>
     </div>
   </p-scrollPanel>
+  <br>
   <div class="ui-inputgroup">
     <label>
-      <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="currentUserMessage"></textarea>
+      <textarea rows="1" cols="21" placeholder="..." pInputTextarea [(ngModel)]="currentUserMessage"></textarea>
     </label>
-  </div>
-  <div class="ui-inputgroup">
-    <p-button label="Send" (onClick)="sendMessage()"></p-button>
+    <p-button id="sendMessage" label="Send" (onClick)="sendMessage()"></p-button>
   </div>
   <div class="ui-inputgroup">
     <p-button label="Stop Chat" (onClick)="stopChat()"></p-button>

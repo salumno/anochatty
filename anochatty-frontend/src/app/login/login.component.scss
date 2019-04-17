@@ -1,10 +1,27 @@
 @media all and (min-width: 400px) {
   .form {
-    padding: 60px 0;
+    padding-top: 15%;
+    text-align: center;
+  }
+
+  #loginForm{
+    background: rgba(255, 245, 253, 0.3);
   }
 
   .form div {
+    padding-top: 3px;
+    text-align: center;
     margin: 0 auto;
-    max-width: 390px;
+    max-width: 196px;
   }
+
+  .fa-user{
+    text-align: center;
+    border: #d6a693;
+  }
+
+  .fa-key{
+    border: #d6a693;
+  }
+
 }
